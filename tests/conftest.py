@@ -1,17 +1,12 @@
 """
-Shared test fixtures and configuration for AI Learning Pipeline tests.
+Shared test fixtures and configuration for AI Notetaking Pipeline tests.
 """
 
-import sys
 from pathlib import Path
 import pytest
 from typing import Generator
 
-# Add src directory to Python path for imports
-src_dir = Path(__file__).parent.parent / "src"
-sys.path.insert(0, str(src_dir))
-
-from prompt_generator import PromptGenerator
+from src.prompt_generator import PromptGenerator
 
 
 @pytest.fixture

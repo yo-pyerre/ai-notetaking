@@ -9,8 +9,8 @@ import json
 import pytest
 from typing import Dict, Any
 
-from response_parser import ResponseParser
-from models import AIResponse, Note, Flashcard
+from src.response_parser import ResponseParser
+from src.models import AIResponse, Note, Flashcard
 
 
 class TestResponseParser:

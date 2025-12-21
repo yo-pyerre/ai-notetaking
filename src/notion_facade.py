@@ -12,7 +12,7 @@ from datetime import datetime
 from notion_client import Client
 from pydantic import ValidationError
 
-from models import Note, TopicConfig, NotionSchema
+from src.models import Note, TopicConfig, NotionSchema
 
 
 class NotionClientError(Exception):

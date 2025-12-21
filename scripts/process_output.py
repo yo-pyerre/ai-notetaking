@@ -18,11 +18,11 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeElapsedColumn
 from rich.table import Table
 
-from response_parser import ResponseParser
-from notion_facade import NotionClient, NotionClientError
-from anki_generator import generate_deck_from_flashcards
-from config_loader import get_topic_config, list_topics
-from models import AIResponse
+from src.response_parser import ResponseParser
+from src.notion_facade import NotionClient, NotionClientError
+from src.anki_generator import generate_deck_from_flashcards
+from src.config_loader import ConfigLoader
+from src.models import AIResponse
 
 console = Console()
 

@@ -7,9 +7,9 @@ Handles template loading, placeholder replacement, and JSON schema injection.
 
 import json
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Optional
 
-from models import AIResponse
+from src.models import AIResponse
 
 
 class PromptGenerator:
@@ -52,21 +52,18 @@ class PromptGenerator:
             str: JSON schema specification as a formatted string
         """
         # Create a sample response structure to show the expected format
-        sample_response = AIResponse(
-            note={
+        sample_dict = {
+            "note": {
                 "title": "Sample Title",
                 "summary": "Brief summary of the content",
                 "key_points": ["Key point 1", "Key point 2", "Key point 3"],
                 "database_fields": {"custom_field": "value"}
             },
-            flashcards=[
+            "flashcards": [
                 {"front": "Question?", "back": "Answer", "tags": ["tag1", "tag2"]},
                 {"front": "Another question?", "back": "Another answer", "tags": ["tag1"]}
             ]
-        )
-
-        # Convert to dict for JSON formatting
-        sample_dict = sample_response.dict()
+        }
 
         # Create formatted JSON string
         formatted_json = json.dumps(sample_dict, indent=2, ensure_ascii=False)
@@ -143,33 +140,3 @@ Where:
 
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(prompt)
-
-
-# Global instance for convenience
-prompt_generator = PromptGenerator()
-
-
-def generate_prompt(video_url: str, topic: str, template_name: Optional[str] = None) -> str:
-    """
-    Convenience function to generate a prompt.
-
-    Args:
-        video_url: URL of the video to analyze
-        topic: Topic name
-        template_name: Optional template name override
-
-    Returns:
-        str: Complete formatted prompt
-    """
-    return prompt_generator.generate_prompt(video_url, topic, template_name)
-
-
-def save_prompt(prompt: str, output_path: str) -> None:
-    """
-    Convenience function to save a prompt.
-
-    Args:
-        prompt: The generated prompt content
-        output_path: Path where to save the prompt
-    """
-    prompt_generator.save_prompt(prompt, output_path)

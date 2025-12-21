@@ -7,9 +7,9 @@ placeholder replacement, and file operations.
 
 import pytest
 from pathlib import Path
-from unittest.mock import patch, mock_open
+from unittest.mock import patch
 
-from prompt_generator import PromptGenerator
+from src.prompt_generator import PromptGenerator
 
 
 class TestPromptGenerator:

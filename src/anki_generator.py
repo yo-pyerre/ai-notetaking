@@ -11,8 +11,8 @@ from typing import List
 from datetime import datetime
 import hashlib
 
-from models import Flashcard
-from config_loader import get_defaults
+from src.models import Flashcard
+from src.config_loader import get_defaults
 
 
 def generate_deck_id(deck_name: str, timestamp: str) -> int:

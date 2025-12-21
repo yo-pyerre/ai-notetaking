@@ -9,7 +9,7 @@ import json
 from typing import Dict, Any, Union
 from pydantic import ValidationError
 
-from models import AIResponse, Note, Flashcard
+from src.models import AIResponse, Note, Flashcard
 
 
 class ResponseParser:

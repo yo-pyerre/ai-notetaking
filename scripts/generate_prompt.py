@@ -17,9 +17,9 @@ import click
 from rich.console import Console
 from rich.panel import Panel
 
-from models import AIResponse
-from prompt_generator import generate_prompt, save_prompt
-from config_loader import list_topics
+from src.models import AIResponse
+from src.prompt_generator import PromptGenerator
+from src.config_loader import ConfigLoader
 
 console = Console()
 

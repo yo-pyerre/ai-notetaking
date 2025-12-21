@@ -11,7 +11,6 @@ from datetime import datetime
 
 from src.notion_facade import (
     NotionClient,
-    NotionClientError,
     NotionAuthenticationError,
     NotionPageCreationError
 )

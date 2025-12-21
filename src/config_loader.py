@@ -10,7 +10,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from models import TopicsConfig, DefaultsConfig, TopicConfig
+from src.models import TopicsConfig, DefaultsConfig, TopicConfig
 
 
 class ConfigLoader:
@@ -124,40 +124,3 @@ class ConfigLoader:
             self.load_defaults_config()
 
         return self._defaults_config
-
-
-# Global instance for convenience
-config_loader = ConfigLoader()
-
-
-def get_topic_config(topic_name: str) -> TopicConfig:
-    """
-    Convenience function to get topic configuration.
-
-    Args:
-        topic_name: Name of the topic
-
-    Returns:
-        TopicConfig: Configuration for the topic
-    """
-    return config_loader.get_topic_config(topic_name)
-
-
-def list_topics() -> List[str]:
-    """
-    Convenience function to list all topics.
-
-    Returns:
-        List[str]: List of topic names
-    """
-    return config_loader.list_topics()
-
-
-def get_defaults() -> DefaultsConfig:
-    """
-    Convenience function to get defaults configuration.
-
-    Returns:
-        DefaultsConfig: Default configuration
-    """
-    return config_loader.get_defaults()
