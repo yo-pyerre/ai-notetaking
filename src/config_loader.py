@@ -10,7 +10,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from .models import TopicsConfig, DefaultsConfig, TopicConfig
+from models import TopicsConfig, DefaultsConfig, TopicConfig
 
 
 class ConfigLoader:

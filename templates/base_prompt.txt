@@ -1,0 +1,20 @@
+You are an expert educational content analyst. Analyze the following video content and extract structured learning materials.
+
+VIDEO URL: {video_url}
+TOPIC: {topic}
+
+Your task is to analyze the video content and create comprehensive learning materials including both structured notes and flashcards for spaced repetition learning.
+
+Please provide your response in the following JSON format:
+
+{output_format_spec}
+
+Guidelines:
+- Extract key concepts, techniques, and information from the video
+- Create detailed, structured notes that would be valuable for learning
+- Generate flashcards that focus on important facts, definitions, and concepts
+- Ensure all content is accurate and directly derived from the video content
+- Use clear, concise language suitable for educational purposes
+- Include specific examples, timestamps, and details from the video where relevant
+
+Focus on creating high-quality, educational content that will help learners understand and retain the material effectively.

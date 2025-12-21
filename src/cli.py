@@ -8,7 +8,7 @@ import click
 from rich.console import Console
 from rich.table import Table
 
-from .config_loader import get_topic_config, list_topics, get_defaults
+from config_loader import get_topic_config, list_topics, get_defaults
 
 console = Console()
 
