@@ -14,7 +14,7 @@ from src.models import TopicsConfig, DefaultsConfig, TopicConfig
 
 
 class ConfigLoader:
-    """Loads and manages configuration for the AI Learning Pipeline."""
+    """Loads and manages configuration for the AI Notetaking Pipeline."""
 
     def __init__(self, config_dir: str = "config"):
         """

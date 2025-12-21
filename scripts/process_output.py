@@ -6,12 +6,7 @@ Command-line interface for processing AI-generated responses into Notion pages a
 Supports selective processing with progress indicators and error handling.
 """
 
-import sys
 from pathlib import Path
-
-# Add the src directory to the path so we can import our modules
-src_dir = Path(__file__).parent.parent / "src"
-sys.path.insert(0, str(src_dir))
 
 import click
 from rich.console import Console
