@@ -1,13 +1,17 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, HttpUrl, ConfigDict
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 
 class Flashcard(BaseModel):
+    model_config = ConfigDict(strict=True)
+
     front: str
     back: str
     tags: List[str] = []
 
 class Note(BaseModel):
+    model_config = ConfigDict(strict=True)
+
     title: str
     summary: str
     key_points: List[str] = []
