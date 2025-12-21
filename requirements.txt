@@ -1,0 +1,7 @@
+python-dotenv==0.21.1
+pyyaml==6.0.1
+notion-client==2.2.1
+genanki==0.13.0
+pydantic==1.10.15
+click==8.1.7
+rich==13.7.0

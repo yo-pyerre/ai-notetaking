@@ -1,0 +1,11 @@
+anki:
+  model_id: 1607392319  # Basic model ID
+  deck_id_base: 2000000000
+
+output:
+  prompts_dir: "output/prompts"
+  responses_dir: "output/responses"
+  anki_dir: "output/anki"
+
+notion:
+  default_page_icon: "book"
