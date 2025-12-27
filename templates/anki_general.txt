@@ -1,0 +1,17 @@
+{priming_text}
+
+VIDEO URL: {video_url}
+TOPIC: {topic}
+
+Your task is to analyze the video content and generate a series of flashcards for spaced repetition learning.
+
+Please provide your response in the following JSON format:
+
+{output_format_spec}
+
+Flashcard Generation Guidelines:
+- Focus on key facts, definitions, and concepts.
+- Each flashcard should represent a single, atomic piece of information.
+- The "front" of the flashcard should be a clear question.
+- The "back" of the flashcard should be a concise answer.
+- Ensure all content is accurate and directly derived from the video.

@@ -1,37 +1,27 @@
 topics:
   cooking:
-    notion_database_id: "abc123def456"
-    anki_deck_name: "Cooking & Recipes"
-    prompt_template: "cooking.txt"
-    notion_schema:
+    notion:
+      database_id: abc123def456
       required_fields:
         - Title
         - Source
         - DateAdded
         - Type
-      custom_fields:
-        - Cuisine          # select
-        - Difficulty       # select
-        - Ingredients      # rich_text
-        - Instructions     # rich_text
-        - CookTime         # number
-    anki_tags:
-      - cooking
-      - recipes
+        - Cuisine
+        - Difficulty
+        - CookTime
 
   general:
-    notion_database_id: "xyz789uvw012"
-    anki_deck_name: "General Learning"
-    prompt_template: "general.txt"
-    notion_schema:
+    notion:
+      database_id: xyz789uvw012
       required_fields:
         - Title
         - Source
         - DateAdded
         - Type
         - Summary
-      custom_fields: []
-    anki_tags:
-      - learning
-
-# Add more topics as needed
+      additional_instructions: Summarize the key points in a paragraph.
+    anki:
+      deck_name: General Learning
+      tags:
+        - learning

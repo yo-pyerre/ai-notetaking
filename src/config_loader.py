@@ -1,5 +1,5 @@
 """
-Configuration loader for AI Learning Pipeline.
+Configuration loader for AI Notetaking Pipeline.
 
 Loads and validates configuration files using Pydantic models.
 Provides helper functions for accessing topic configurations.

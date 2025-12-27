@@ -7,9 +7,8 @@ Handles template loading, placeholder replacement, and JSON schema injection.
 
 import json
 from pathlib import Path
-from typing import Optional
 
-from src.models import AIResponse
+from src.models import TopicConfig, DefaultsConfig
 
 
 class PromptGenerator:
@@ -44,55 +43,46 @@ class PromptGenerator:
         with open(template_path, 'r', encoding='utf-8') as f:
             return f.read()
 
-    def get_output_format_spec(self) -> str:
+    def get_output_format_spec(self, topic_config: TopicConfig, output_format: str, defaults: DefaultsConfig) -> str:
         """
         Generate the JSON schema specification for AI responses.
+
+        Args:
+            topic_config: The configuration for the selected topic.
+            output_format: The selected output format (e.g., "notion", "anki").
+            defaults: The default configuration.
 
         Returns:
             str: JSON schema specification as a formatted string
         """
-        # Create a sample response structure to show the expected format
-        sample_dict = {
-            "note": {
-                "title": "Sample Title",
-                "summary": "Brief summary of the content",
-                "key_points": ["Key point 1", "Key point 2", "Key point 3"],
-                "database_fields": {"custom_field": "value"}
-            },
-            "flashcards": [
-                {"front": "Question?", "back": "Answer", "tags": ["tag1", "tag2"]},
-                {"front": "Another question?", "back": "Another answer", "tags": ["tag1"]}
-            ]
-        }
+        try:
+            response_structure = getattr(defaults.response_structures, output_format)
+        except AttributeError:
+            raise ValueError(f"Unsupported output format '{output_format}'")
 
-        # Create formatted JSON string
+        sample_dict = response_structure.sample
+        spec_details = response_structure.details
+
+        if output_format == "notion":
+            # Dynamically replace the custom_fields in the sample
+            notion_config = topic_config.outputs.notion
+            sample_dict["note"]["database_fields"] = {field: "value" for field in notion_config.schema.custom_fields}
+
         formatted_json = json.dumps(sample_dict, indent=2, ensure_ascii=False)
-
-        spec = f"""```json
-{formatted_json}
-```
-
-Where:
-- `note`: Contains the main structured notes with:
-  - `title`: A concise, descriptive title for the content
-  - `summary`: A brief overview of the main topic and key takeaways
-  - `key_points`: Array of important points, concepts, or steps
-  - `database_fields`: Object with topic-specific custom fields for Notion
-- `flashcards`: Array of flashcard objects, each with:
-  - `front`: The question or prompt side of the flashcard
-  - `back`: The answer or explanation side
-  - `tags`: Array of strings for categorization and filtering"""
+        spec = f"```json\n{formatted_json}\n```\n\nWhere:\n{spec_details}"
 
         return spec
 
-    def generate_prompt(self, video_url: str, topic: str, template_name: Optional[str] = None) -> str:
+    def generate_prompt(self, video_url: str, topic_config: TopicConfig, output_format: str, defaults: DefaultsConfig, topic: str) -> str:
         """
         Generate a complete prompt for AI analysis.
 
         Args:
             video_url: URL of the video to analyze
-            topic: Topic name (e.g., "cooking", "general")
-            template_name: Optional template name override
+            topic_config: The configuration for the selected topic.
+            output_format: The selected output format (e.g., "notion", "anki").
+            defaults: The default configuration.
+            topic: The name of the topic.
 
         Returns:
             str: Complete formatted prompt
@@ -100,30 +90,19 @@ Where:
         Raises:
             ValueError: If topic is not supported or template loading fails
         """
-        # Determine template name from topic if not provided
-        if template_name is None:
-            # This could be extended to load from config, but for now use simple mapping
-            template_mapping = {
-                "cooking": "cooking.txt",
-                "general": "general.txt"
-            }
+        try:
+            output_config = getattr(topic_config.outputs, output_format)
+            template_name = output_config.prompt_template
+        except AttributeError:
+            raise ValueError(f"Unsupported output format '{output_format}'")
 
-            if topic not in template_mapping:
-                available_topics = list(template_mapping.keys())
-                raise ValueError(f"Unsupported topic '{topic}'. Available topics: {available_topics}")
-
-            template_name = template_mapping[topic]
-
-        # Load the template
         template_content = self.load_template(template_name)
+        output_format_spec = self.get_output_format_spec(topic_config, output_format, defaults)
 
-        # Get the output format specification
-        output_format_spec = self.get_output_format_spec()
-
-        # Replace placeholders
         prompt = template_content.replace("{video_url}", video_url)
-        prompt = prompt.replace("{topic}", topic)
+        prompt = prompt.replace("{priming_text}", topic_config.priming_text)
         prompt = prompt.replace("{output_format_spec}", output_format_spec)
+        prompt = prompt.replace("{topic}", topic)
 
         return prompt
 
