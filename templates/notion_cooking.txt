@@ -1,0 +1,9 @@
+{priming_text}
+
+VIDEO URL: {video_url}
+TOPIC: {topic}
+
+Please provide your response in the following JSON format:
+
+{output_format_spec}
+

@@ -1,16 +1,15 @@
 """
-Configuration loader for AI Learning Pipeline.
+Configuration loader for AI Notetaking Pipeline.
 
 Loads and validates configuration files using Pydantic models.
 Provides helper functions for accessing topic configurations.
 """
 
-import os
 import yaml
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import  List, Optional
 
-from src.models import TopicsConfig, DefaultsConfig, TopicConfig
+from src.models import TopicsConfig, TopicConfig
 
 
 class ConfigLoader:
@@ -25,7 +24,6 @@ class ConfigLoader:
         """
         self.config_dir = Path(config_dir)
         self._topics_config: Optional[TopicsConfig] = None
-        self._defaults_config: Optional[DefaultsConfig] = None
 
     def load_topics_config(self) -> TopicsConfig:
         """
@@ -47,37 +45,12 @@ class ConfigLoader:
                 data = yaml.safe_load(f)
 
             self._topics_config = TopicsConfig(**data)
+            print(self._topics_config)
             return self._topics_config
         except yaml.YAMLError as e:
             raise ValueError(f"Invalid YAML in topics configuration: {e}")
         except Exception as e:
             raise ValueError(f"Failed to load topics configuration: {e}")
-
-    def load_defaults_config(self) -> DefaultsConfig:
-        """
-        Load defaults configuration from YAML file.
-
-        Returns:
-            DefaultsConfig: Validated defaults configuration
-
-        Raises:
-            FileNotFoundError: If defaults.yaml is not found
-            ValueError: If configuration is invalid
-        """
-        defaults_file = self.config_dir / "defaults.yaml"
-        if not defaults_file.exists():
-            raise FileNotFoundError(f"Defaults configuration file not found: {defaults_file}")
-
-        try:
-            with open(defaults_file, 'r', encoding='utf-8') as f:
-                data = yaml.safe_load(f)
-
-            self._defaults_config = DefaultsConfig(**data)
-            return self._defaults_config
-        except yaml.YAMLError as e:
-            raise ValueError(f"Invalid YAML in defaults configuration: {e}")
-        except Exception as e:
-            raise ValueError(f"Failed to load defaults configuration: {e}")
 
     def get_topic_config(self, topic_name: str) -> TopicConfig:
         """
@@ -112,15 +85,3 @@ class ConfigLoader:
             self.load_topics_config()
 
         return list(self._topics_config.topics.keys())
-
-    def get_defaults(self) -> DefaultsConfig:
-        """
-        Get default configuration values.
-
-        Returns:
-            DefaultsConfig: Default configuration
-        """
-        if self._defaults_config is None:
-            self.load_defaults_config()
-
-        return self._defaults_config

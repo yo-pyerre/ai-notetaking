@@ -1,0 +1,39 @@
+We are going to use Notion, a popular notetaking application, to record our notes. I need you to provide two outputs: a JSON filling out the Notion database's required fields and the notes in markdown.
+
+Required Fields:
+{required_fields}
+
+Notion supports most standard markdown formatting syntax, but there are some notable differences. Make sure you follow the Notion markdown guidelines listed below.
+
+SUPPORTED - Use Standard Markdown:
+- Headings (# ## ###)
+- Bold (**text**) and Italic (*text*)
+- Ordered lists (1. 2. 3.)
+- Unordered lists (- or *)
+- Inline code (`code`)
+- Fenced code blocks (```)
+- Horizontal rules (---)
+- Task lists (- [ ] and - [x])
+- Emoji (copy/paste or :shortcode format without closing colon)
+- Automatic URL linking
+
+PARTIAL SUPPORT - Paste Only:
+- Links: Use standard `[text](url)` syntax only when pasting. Don't rely on typing them in the editor
+- Images: Use `![alt](url)` only when pasting
+- Tables: Use pipe syntax only when pasting. Don't try to type them
+- Strikethrough: Use two tildes when pasting (~~text~~), but note Notion uses single tilde when typing
+
+SPECIAL SYNTAX FOR NOTION:
+- Blockquotes: Use `|` or `"` instead of `>` (which creates a Toggle in Notion)
+- Line breaks: When pasting, use trailing backslash or single Return. When typing directly in Notion, use Shift-Return
+- Syntax highlighting: Must select language via GUI, not in code fence
+
+NOT SUPPORTED - Avoid:
+- HTML tags
+- Footnotes
+- Heading IDs
+- Definition lists
+- Highlight syntax (==text==)
+- Subscript/Superscript
+- Typing links with bracket syntax directly in editor
+- Typing tables with pipes directly in editor

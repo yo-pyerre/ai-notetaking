@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 
@@ -17,41 +17,26 @@ class Note(BaseModel):
     key_points: List[str] = []
     database_fields: Dict[str, Any] = {}  # Topic-specific fields
 
-# Configuration Models
-class NotionSchema(BaseModel):
+class NotionConfig(BaseModel):
+    database_id: str
     required_fields: List[str]
-    custom_fields: List[str]
+    additional_instructions: Optional[str] = None
+
+class AnkiConfig(BaseModel):
+    deck_name: str
+    tags: List[str]
 
 class TopicConfig(BaseModel):
-    notion_database_id: str
-    anki_deck_name: str
-    prompt_template: str
-    notion_schema: NotionSchema
-    anki_tags: List[str]
+    notion: Optional[NotionConfig] = None
+    anki: Optional[AnkiConfig] = None
 
 class TopicsConfig(BaseModel):
     topics: Dict[str, TopicConfig]
 
-class AnkiDefaults(BaseModel):
-    model_id: int
-    deck_id_base: int
+class ResponseStructure(BaseModel):
+    sample: Dict[str, Any]
+    details: str
 
-class OutputDefaults(BaseModel):
-    prompts_dir: str
-    responses_dir: str
-    anki_dir: str
-
-class NotionDefaults(BaseModel):
-    default_page_icon: str
-
-class DefaultsConfig(BaseModel):
-    anki: AnkiDefaults
-    output: OutputDefaults
-    notion: NotionDefaults
-
-# API Response Models
-class AIResponse(BaseModel):
-    note: Note
-    flashcards: List[Flashcard]
-
-# Add more as needed
+class ResponseStructures(BaseModel):
+    notion: ResponseStructure
+    anki: ResponseStructure
