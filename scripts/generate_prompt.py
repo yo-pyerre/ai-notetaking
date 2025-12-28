@@ -9,6 +9,7 @@ import questionary
 from rich.console import Console
 from rich.panel import Panel
 
+from src.models import TopicConfig
 from src.prompt_generator import PromptGenerator
 from src.config_loader import ConfigLoader
 
@@ -24,7 +25,7 @@ def main():
         prompt_generator = PromptGenerator()
         
         # --- Interactive CLI ---
-        console.print("[bold blue]Welcome to the AI Notetaking Prompt Generator![/bold blue]")
+        console.print("[bold blue]AI Notetaking Prompt Generator![/bold blue]")
 
         # 1. Select a topic
         available_topics = config_loader.list_topics()
@@ -36,28 +37,29 @@ def main():
         if not topic_name:
             return
 
-        topic_config = config_loader.get_topic_config(topic_name)
+        topic_config= config_loader.get_topic_config(topic_name)
 
         # 2. Select an output format
         output_format = questionary.select(
             "Select an output format:",
-            choices=topic_config.supported_outputs
+            choices=topic_config.model_dump(exclude_unset=True)
         ).ask()
 
         if not output_format:
             return
 
         # 3. Enter the video URL
-        video_url = questionary.text("Enter the video URL:").ask()
+        # TODO: Expand this to support other source types
+        source = questionary.text("Enter the video URL:").ask()
 
-        if not video_url:
+        if not source:
             return
 
         # --- Prompt Generation ---
         console.print(f"\n[blue]Generating prompt for topic '{topic_name}' and output format '{output_format}'...[/blue]")
 
         prompt = prompt_generator.generate_prompt(
-            video_url=video_url,
+            source=source,
             topic_config=topic_config,
             output_format=output_format,
             topic=topic_name

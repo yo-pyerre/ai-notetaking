@@ -37,3 +37,5 @@ NOT SUPPORTED - Avoid:
 - Subscript/Superscript
 - Typing links with bracket syntax directly in editor
 - Typing tables with pipes directly in editor
+
+Source Material = {source}
